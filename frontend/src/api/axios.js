@@ -1,7 +1,14 @@
 import axios from 'axios';
 
+// In production, set REACT_APP_API_URL to your deployed backend's URL
+// (e.g. https://easykhata-backend.onrender.com). Locally, this is left
+// unset and requests go through the CRA dev server proxy to /api instead.
+const baseURL = process.env.REACT_APP_API_URL
+  ? `${process.env.REACT_APP_API_URL.replace(/\/$/, '')}/api`
+  : '/api';
+
 const api = axios.create({
-  baseURL: '/api',
+  baseURL,
   headers: { 'Content-Type': 'application/json' },
 });
 

@@ -64,7 +64,7 @@ const AddTransactionModal = ({ recoveryManId, type, onClose, onCreated }) => {
           <input
             value={description}
             onChange={(e) => setDescription(e.target.value)}
-            placeholder="Details (optional)"
+            placeholder="Note (optional)"
           />
         </label>
 

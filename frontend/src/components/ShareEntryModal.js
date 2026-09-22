@@ -26,7 +26,7 @@ export const buildMessage = ({ recoveryMan, txn, balance }) => {
   );
 
   if (txn.description && txn.description.trim()) {
-    lines.push(`Details: ${txn.description.trim()}`);
+    lines.push(`Note: ${txn.description.trim()}`);
   }
 
   lines.push(`Date: ${formatDate(txn.date)} ${formatTime(txn.date)}`);
