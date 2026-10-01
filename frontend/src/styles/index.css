@@ -1,38 +1,38 @@
 :root {
-  /* EasyKhata palette — deep slate surfaces, emerald income, rose expense, amber accent */
-  --bg: #0f172a;          /* slate-900 */
-  --surface: #1e293b;     /* slate-800 */
-  --surface-2: #273549;
-  --surface-3: #334155;   /* slate-700 */
-  --border: #334155;      /* slate-700 */
-  --border-soft: #27354a;
+  /* EasyKhata palette — matched to DigiKhata's near-black app + orange/red accent + vivid green/red */
+  --bg: #0a0a0a;
+  --surface: #171717;
+  --surface-2: #1f1f1f;
+  --surface-3: #292929;
+  --border: #2a2a2a;
+  --border-soft: #1f1f1f;
 
-  --text: #e2e8f0;        /* slate-200 */
-  --text-muted: #94a3b8;  /* slate-400 */
-  --text-faint: #64748b;  /* slate-500 */
+  --text: #ffffff;
+  --text-muted: #a1a1aa;  /* zinc-400 */
+  --text-faint: #71717a;  /* zinc-500 */
 
-  --brass: #f59e0b;       /* amber-500 */
-  --brass-light: #fbbf24; /* amber-400 */
-  --brass-deep: #d97706;  /* amber-600 */
-  --brass-soft: rgba(245, 158, 11, 0.16);
+  --brass: #ff6a00;       /* DigiKhata-style orange */
+  --brass-light: #ff8a3d;
+  --brass-deep: #e63e00;  /* deeper orange-red */
+  --brass-soft: rgba(255, 106, 0, 0.16);
 
-  --income: #34d399;      /* emerald-400 */
-  --income-light: #6ee7b7;
-  --income-soft: rgba(52, 211, 153, 0.14);
-  --expense: #fb7185;     /* rose-400 */
-  --expense-light: #fda4af;
-  --expense-soft: rgba(251, 113, 133, 0.14);
+  --income: #22c55e;      /* vivid green — "You Got" */
+  --income-light: #4ade80;
+  --income-soft: rgba(34, 197, 94, 0.14);
+  --expense: #ef4444;     /* vivid red — "You Gave" */
+  --expense-light: #f87171;
+  --expense-soft: rgba(239, 68, 68, 0.14);
 
   --radius-sm: 8px;
   --radius-md: 14px;
   --radius-lg: 20px;
 
-  --shadow-sm: 0 1px 2px rgba(2, 6, 23, 0.4);
-  --shadow-md: 0 8px 24px rgba(2, 6, 23, 0.45);
-  --shadow-lg: 0 16px 48px rgba(2, 6, 23, 0.55);
-  --shadow-brass: 0 10px 28px rgba(245, 158, 11, 0.24);
-  --shadow-income: 0 10px 28px rgba(52, 211, 153, 0.18);
-  --shadow-expense: 0 10px 28px rgba(251, 113, 133, 0.18);
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.45);
+  --shadow-md: 0 8px 24px rgba(0, 0, 0, 0.5);
+  --shadow-lg: 0 16px 48px rgba(0, 0, 0, 0.6);
+  --shadow-brass: 0 10px 28px rgba(255, 106, 0, 0.26);
+  --shadow-income: 0 10px 28px rgba(34, 197, 94, 0.2);
+  --shadow-expense: 0 10px 28px rgba(239, 68, 68, 0.2);
 
   --ease: cubic-bezier(0.4, 0, 0.2, 1);
 
@@ -52,8 +52,8 @@ body {
 
 body {
   background:
-    radial-gradient(1100px 520px at 12% -8%, rgba(245, 158, 11, 0.10), transparent 60%),
-    radial-gradient(900px 480px at 100% 0%, rgba(52, 211, 153, 0.07), transparent 55%),
+    radial-gradient(1100px 520px at 12% -8%, rgba(255, 106, 0, 0.10), transparent 60%),
+    radial-gradient(900px 480px at 100% 0%, rgba(34, 197, 94, 0.06), transparent 55%),
     var(--bg);
   background-attachment: fixed;
   color: var(--text);

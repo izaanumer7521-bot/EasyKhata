@@ -1,15 +1,15 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512" role="img" aria-label="EasyKhata">
   <defs>
     <linearGradient id="ekFav" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#F59E0B" />
-      <stop offset="45%" stop-color="#EAB308" />
-      <stop offset="100%" stop-color="#34D399" />
+      <stop offset="0%" stop-color="#FF8A3D" />
+      <stop offset="50%" stop-color="#FF6A00" />
+      <stop offset="100%" stop-color="#E63E00" />
     </linearGradient>
   </defs>
 
   <rect x="0" y="0" width="512" height="512" rx="128" ry="128" fill="url(#ekFav)" />
 
-  <g stroke="#0F172A" stroke-width="44" fill="none" stroke-linecap="butt">
+  <g stroke="#0A0A0A" stroke-width="44" fill="none" stroke-linecap="butt">
     <path d="M128 156 V356" />
     <path d="M128 178 H248" />
     <path d="M128 256 H226" />

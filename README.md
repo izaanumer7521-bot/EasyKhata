@@ -16,6 +16,8 @@ vocabulary adapted:
 - Add / delete recovery men, with an optional opening balance
 - Per-recovery-man ledger page: add **Income** or **Expense** entries, each with amount, description and date
 - After saving an entry, a popup offers **Send on WhatsApp** / **Send SMS** to the recovery man's saved phone number, with a message containing the amount, your note, and the updated net total (plus a copy-to-clipboard fallback)
+- Every entry shows the exact date and time it was added, visible on both desktop and mobile
+- Dark theme matched to DigiKhata's look: near-black background, orange/red accent, vivid green for income and red for expense
 - Running balance calculated after every entry, exactly like a paper khata book
 - Totals for income, expense, and net balance per recovery man and across the whole book
 - Clean, responsive, dark-themed UI (mobile-first, works on desktop too)

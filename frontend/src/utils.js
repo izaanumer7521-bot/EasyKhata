@@ -15,7 +15,7 @@ export const initials = (name = '') =>
     .join('') || '?';
 
 // Deterministic color from a string, used for avatar backgrounds
-const AVATAR_PALETTE = ['#f59e0b', '#34d399', '#fb7185', '#60a5fa', '#a78bfa', '#2dd4bf'];
+const AVATAR_PALETTE = ['#ff6a00', '#22c55e', '#ef4444', '#3b82f6', '#a855f7', '#14b8a6'];
 export const avatarColor = (seed = '') => {
   let hash = 0;
   for (let i = 0; i < seed.length; i += 1) {

@@ -9,7 +9,7 @@
   position: sticky;
   top: 0;
   z-index: 20;
-  background: rgba(30, 41, 59, 0.86);
+  background: rgba(23, 23, 23, 0.86);
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
   border-bottom: 1px solid var(--border-soft);
@@ -238,7 +238,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #0f172a;
+  color: #1a0f00;
   font-weight: 700;
   font-size: 15px;
   box-shadow: 0 0 0 3px var(--surface-2), 0 4px 10px rgba(0, 0, 0, 0.35);
@@ -328,7 +328,7 @@
   align-items: center;
   gap: 8px;
   background: linear-gradient(135deg, var(--brass) 0%, var(--brass-deep) 100%);
-  color: #0f172a;
+  color: #1a0f00;
   border: none;
   border-radius: 999px;
   padding: 14px 26px;
@@ -340,7 +340,7 @@
 }
 .fab:hover {
   transform: translateX(-50%) translateY(-2px);
-  box-shadow: 0 14px 32px rgba(245, 158, 11, 0.34), var(--shadow-lg);
+  box-shadow: 0 14px 32px rgba(255, 106, 0, 0.34), var(--shadow-lg);
 }
 .fab:active {
   transform: translateX(-50%) translateY(0);
@@ -410,13 +410,13 @@
   overflow: hidden;
 }
 .balance-give {
-  background: linear-gradient(180deg, var(--expense-soft), rgba(251, 113, 133, 0.05));
-  border-color: rgba(251, 113, 133, 0.24);
+  background: linear-gradient(180deg, var(--expense-soft), rgba(239, 68, 68, 0.05));
+  border-color: rgba(239, 68, 68, 0.24);
   box-shadow: var(--shadow-expense);
 }
 .balance-get {
-  background: linear-gradient(180deg, var(--income-soft), rgba(52, 211, 153, 0.05));
-  border-color: rgba(52, 211, 153, 0.24);
+  background: linear-gradient(180deg, var(--income-soft), rgba(34, 197, 94, 0.05));
+  border-color: rgba(34, 197, 94, 0.24);
   box-shadow: var(--shadow-income);
 }
 .balance-settled {
@@ -621,18 +621,18 @@
 
 .btn-brass {
   background: linear-gradient(135deg, var(--brass) 0%, var(--brass-deep) 100%);
-  color: #0f172a;
+  color: #1a0f00;
   box-shadow: var(--shadow-brass);
 }
 
 .btn-income {
   background: linear-gradient(135deg, var(--income-light) 0%, var(--income) 100%);
-  color: #052e21;
+  color: #052e14;
   box-shadow: var(--shadow-income);
 }
 .btn-expense {
   background: linear-gradient(135deg, var(--expense-light) 0%, var(--expense) 100%);
-  color: #4c0519;
+  color: #450a0a;
   box-shadow: var(--shadow-expense);
 }
 .btn:hover {
@@ -646,7 +646,7 @@
 .modal-overlay {
   position: fixed;
   inset: 0;
-  background: rgba(2, 6, 23, 0.7);
+  background: rgba(0, 0, 0, 0.75);
   backdrop-filter: blur(2px);
   display: flex;
   align-items: flex-end;
@@ -762,15 +762,48 @@
 
 /* ===== Responsive ===== */
 @media (max-width: 480px) {
-  .txn-table-head span:first-child,
-  .txn-when {
+  /* Date/time stays visible on mobile — it just moves above the
+     description instead of living in its own grid column. */
+  .txn-table-head span:first-child {
     display: none;
   }
   .txn-table-head {
     grid-template-columns: 1.6fr 0.9fr 0.9fr;
   }
   .txn-row {
-    grid-template-columns: 1.6fr 0.9fr 0.9fr auto;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    column-gap: 8px;
+    row-gap: 4px;
+    position: relative;
+    padding-right: 34px;
+  }
+  .txn-when {
+    order: 0;
+    flex: 1 1 100%;
+    flex-direction: row;
+    align-items: baseline;
+    gap: 6px;
+  }
+  .txn-time {
+    color: var(--text-faint);
+  }
+  .txn-desc {
+    order: 1;
+    flex: 1 1 58%;
+    min-width: 0;
+  }
+  .txn-expense,
+  .txn-income {
+    order: 2;
+    flex: 0 0 auto;
+    margin-left: auto;
+  }
+  .txn-delete {
+    position: absolute;
+    top: 10px;
+    right: 8px;
   }
   .field-row {
     grid-template-columns: 1fr;
@@ -794,12 +827,12 @@
   border: 1px solid transparent;
 }
 .share-badge-income {
-  background: linear-gradient(180deg, var(--income-soft), rgba(52, 211, 153, 0.05));
-  border-color: rgba(52, 211, 153, 0.24);
+  background: linear-gradient(180deg, var(--income-soft), rgba(34, 197, 94, 0.05));
+  border-color: rgba(34, 197, 94, 0.24);
 }
 .share-badge-expense {
-  background: linear-gradient(180deg, var(--expense-soft), rgba(251, 113, 133, 0.05));
-  border-color: rgba(251, 113, 133, 0.24);
+  background: linear-gradient(180deg, var(--expense-soft), rgba(239, 68, 68, 0.05));
+  border-color: rgba(239, 68, 68, 0.24);
 }
 .share-badge-label {
   font-size: 11.5px;
@@ -847,7 +880,7 @@
 
 .share-warning {
   background: var(--brass-soft);
-  border: 1px solid rgba(245, 158, 11, 0.3);
+  border: 1px solid rgba(255, 106, 0, 0.32);
   color: var(--brass-light);
   border-radius: var(--radius-sm);
   padding: 10px 12px;
@@ -874,12 +907,12 @@
 }
 .btn-whatsapp {
   background: linear-gradient(135deg, #4ade80 0%, #22c55e 100%);
-  color: #052e21;
+  color: #052e14;
   box-shadow: 0 8px 20px rgba(34, 197, 94, 0.22);
 }
 .btn-sms {
   background: linear-gradient(135deg, var(--brass-light) 0%, var(--brass) 100%);
-  color: #0f172a;
+  color: #1a0f00;
   box-shadow: var(--shadow-brass);
 }
 .btn-disabled {
