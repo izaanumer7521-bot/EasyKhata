@@ -25,7 +25,11 @@ const AddTransactionModal = ({ recoveryManId, type, onClose, onCreated }) => {
         type,
         amount: Number(amount),
         description,
-        date,
+        // Convert the datetime-local value (no timezone info) to a real
+        // timestamp here, in the browser, where the correct local timezone
+        // is known. Sending the raw string let the server guess the
+        // timezone instead, which produced the wrong time.
+        date: new Date(date).toISOString(),
       });
       onCreated(res.data);
     } catch (err) {
