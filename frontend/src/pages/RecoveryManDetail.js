@@ -5,7 +5,8 @@ import AddTransactionModal from '../components/AddTransactionModal';
 import ShareEntryModal from '../components/ShareEntryModal';
 import EditRecoveryManModal from '../components/EditRecoveryManModal';
 import EditTransactionModal from '../components/EditTransactionModal';
-import { fetchLedger, deleteRecoveryMan } from '../api/services';
+import Modal from '../components/Modal';
+import { fetchLedger, deleteRecoveryMan, bulkDeleteTransactions } from '../api/services';
 import { formatMoney, initials, avatarColor } from '../utils';
 
 const RecoveryManDetail = () => {
@@ -23,6 +24,17 @@ const RecoveryManDetail = () => {
   const [shareEntry, setShareEntry] = useState(null); // { txn, balance } after a save
   const [editingRm, setEditingRm] = useState(false);
   const [editingTxn, setEditingTxn] = useState(null); // entry being edited
+  const [selectMode, setSelectMode] = useState(false);
+  const [selected, setSelected] = useState(new Set());
+  const [confirmOpen, setConfirmOpen] = useState(false);
+  const [deleting, setDeleting] = useState(false);
+  const [toast, setToast] = useState('');
+
+  useEffect(() => {
+    if (!toast) return undefined;
+    const t = setTimeout(() => setToast(''), 3000);
+    return () => clearTimeout(t);
+  }, [toast]);
 
   const load = useCallback(async () => {
     setLoading(true);
@@ -60,6 +72,39 @@ const RecoveryManDetail = () => {
     e.description?.toLowerCase().includes(search.toLowerCase())
   );
 
+  const exitSelect = () => {
+    setSelectMode(false);
+    setSelected(new Set());
+  };
+  const toggle = (tid) =>
+    setSelected((prev) => {
+      const next = new Set(prev);
+      if (next.has(tid)) next.delete(tid);
+      else next.add(tid);
+      return next;
+    });
+  const allSelected = filteredEntries.length > 0 && filteredEntries.every((t) => selected.has(t._id));
+  const toggleAll = () =>
+    setSelected(allSelected ? new Set() : new Set(filteredEntries.map((t) => t._id)));
+  const selectedTotal = entries.filter((t) => selected.has(t._id)).reduce((s, t) => s + t.amount, 0);
+  const word = selected.size === 1 ? 'entry' : 'entries';
+
+  const confirmDelete = async () => {
+    setDeleting(true);
+    try {
+      const res = await bulkDeleteTransactions([...selected]);
+      setConfirmOpen(false);
+      exitSelect();
+      setToast(`Deleted ${res.deleted} ${res.deleted === 1 ? 'entry' : 'entries'}`);
+      await load();
+    } catch (err) {
+      setConfirmOpen(false);
+      setToast(err.message || 'Could not delete');
+    } finally {
+      setDeleting(false);
+    }
+  };
+
   if (loading) return <div className="page empty-state">Loading…</div>;
   if (error || !recoveryMan) return <div className="page empty-state empty-state-error">{error || 'Not found'}</div>;
 
@@ -67,7 +112,7 @@ const RecoveryManDetail = () => {
   const isSettled = currentBalance === 0;
 
   return (
-    <div className="page page-detail">
+    <div className={`page page-detail ${selectMode ? 'page-selecting' : ''}`}>
       <section className="rm-header">
         <span className="rm-avatar rm-avatar-lg" style={{ background: avatarColor(recoveryMan.name) }}>
           {initials(recoveryMan.name)}
@@ -116,6 +161,14 @@ const RecoveryManDetail = () => {
         />
       </div>
 
+      {entries.length > 0 && (
+        <div className="entries-toolbar">
+          <button className="select-toggle" onClick={selectMode ? exitSelect : () => setSelectMode(true)}>
+            {selectMode ? 'Cancel' : 'Select entries'}
+          </button>
+        </div>
+      )}
+
       <section className="txn-table">
         <div className="txn-table-head">
           <span>Entries</span>
@@ -137,11 +190,15 @@ const RecoveryManDetail = () => {
               txn={txn}
               onDeleted={() => load()}
               onEdit={setEditingTxn}
+              selectMode={selectMode}
+              selected={selected.has(txn._id)}
+              onToggle={toggle}
             />
           ))}
         </div>
       </section>
 
+      {!selectMode && (
       <section className="ledger-actions">
         <button className="btn btn-expense btn-half" onClick={() => setModalType('expense')}>
           − Expense
@@ -150,6 +207,39 @@ const RecoveryManDetail = () => {
           + Income
         </button>
       </section>
+      )}
+
+      {selectMode && (
+        <div className="bulk-bar">
+          <button className="bulk-all" onClick={toggleAll}>
+            <span className={`rm-check ${allSelected ? 'rm-check-on' : ''}`}>{allSelected ? '✓' : ''}</span>
+            Select all
+          </button>
+          <span className="bulk-count">{selected.size} selected</span>
+          <button className="bulk-delete" disabled={selected.size === 0} onClick={() => setConfirmOpen(true)}>
+            🗑 Delete
+          </button>
+        </div>
+      )}
+
+      {toast && <div className="toast">{toast}</div>}
+
+      {confirmOpen && (
+        <Modal title={`Delete ${selected.size} ${word}?`} onClose={() => !deleting && setConfirmOpen(false)}>
+          <div className="form">
+            <p className="modal-hint">
+              {selected.size} {word} worth {formatMoney(selectedTotal)} will be removed from this ledger.
+              This cannot be undone.
+            </p>
+            <button className="btn btn-expense btn-block" onClick={confirmDelete} disabled={deleting}>
+              {deleting ? 'Deleting…' : 'Yes, delete permanently'}
+            </button>
+            <button className="btn-link" onClick={() => setConfirmOpen(false)} disabled={deleting}>
+              Keep them
+            </button>
+          </div>
+        </Modal>
+      )}
 
       {modalType && (
         <AddTransactionModal

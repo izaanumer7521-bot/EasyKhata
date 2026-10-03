@@ -983,3 +983,33 @@
     position: static;
   }
 }
+/* ===== Bulk select entries ===== */
+.entries-toolbar { display: flex; justify-content: flex-end; margin: -4px 0 10px; }
+.select-toggle {
+  background: var(--surface); border: 1px solid var(--border-soft); color: var(--brass);
+  font-size: 13px; font-weight: 600; padding: 6px 14px; border-radius: 999px; cursor: pointer;
+}
+.rm-check {
+  width: 22px; height: 22px; border-radius: 7px; border: 2px solid var(--text-faint);
+  display: inline-flex; align-items: center; justify-content: center;
+  font-size: 13px; font-weight: 700; color: #fff; flex-shrink: 0; transition: all 0.15s var(--ease);
+}
+.rm-check-on { background: var(--brass); border-color: var(--brass); }
+.txn-row-selected, .txn-row-selected:hover { background: var(--brass-soft); }
+.page-selecting { padding-bottom: 96px; }
+.bulk-bar {
+  position: fixed; left: 12px; right: 12px; bottom: 14px; max-width: 696px; margin: 0 auto;
+  display: flex; align-items: center; gap: 12px; padding: 10px 12px;
+  background: var(--surface-2); border: 1px solid var(--border-soft); border-radius: 16px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5); z-index: 20; animation: bulkIn 0.2s var(--ease);
+}
+@keyframes bulkIn { from { transform: translateY(20px); opacity: 0; } to { transform: none; opacity: 1; } }
+.bulk-all { display: flex; align-items: center; gap: 8px; background: none; border: none; color: var(--text); font-size: 14px; font-weight: 600; cursor: pointer; }
+.bulk-count { margin-left: auto; font-size: 13px; color: var(--text-faint); }
+.bulk-delete { background: var(--expense); color: #fff; border: none; border-radius: 12px; padding: 10px 16px; font-weight: 700; cursor: pointer; }
+.bulk-delete:disabled { opacity: 0.35; cursor: not-allowed; }
+.toast {
+  position: fixed; left: 50%; bottom: 90px; transform: translateX(-50%);
+  background: var(--surface-2); border: 1px solid var(--border-soft); color: var(--text);
+  padding: 10px 18px; border-radius: 999px; font-size: 14px; box-shadow: 0 8px 24px rgba(0,0,0,0.45); z-index: 30;
+}

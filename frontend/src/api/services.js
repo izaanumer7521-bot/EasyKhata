@@ -26,6 +26,9 @@ export const addTransaction = (payload) =>
 export const updateTransaction = (id, payload) =>
   api.put(`/transactions/${id}`, payload).then((r) => r.data);
 
+export const bulkDeleteTransactions = (ids) =>
+  api.post('/transactions/bulk-delete', { ids }).then((r) => r.data);
+
 export const deleteTransaction = (id) =>
   api.delete(`/transactions/${id}`).then((r) => r.data);
 

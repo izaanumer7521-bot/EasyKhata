@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { formatMoney, formatDate, formatTime } from '../utils';
 import { deleteTransaction } from '../api/services';
 
-const TransactionRow = ({ txn, onDeleted, onEdit }) => {
+const TransactionRow = ({ txn, onDeleted, onEdit, selectMode = false, selected = false, onToggle }) => {
   const [busy, setBusy] = useState(false);
   const isIncome = txn.type === 'income';
 
@@ -19,7 +19,11 @@ const TransactionRow = ({ txn, onDeleted, onEdit }) => {
   };
 
   return (
-    <div className={`txn-row ${busy ? 'txn-row-busy' : ''}`}>
+    <div
+      className={`txn-row ${busy ? 'txn-row-busy' : ''} ${selected ? 'txn-row-selected' : ''}`}
+      onClick={selectMode ? () => onToggle(txn._id) : undefined}
+      style={selectMode ? { cursor: 'pointer' } : undefined}
+    >
       <div className="txn-when">
         <span className="txn-date">{formatDate(txn.date)}</span>
         <span className="txn-time">{formatTime(txn.date)}</span>
@@ -37,6 +41,11 @@ const TransactionRow = ({ txn, onDeleted, onEdit }) => {
         {isIncome && <span className="text-income">{formatMoney(txn.amount)}</span>}
       </div>
 
+      {selectMode ? (
+        <div className="txn-actions">
+          <span className={`rm-check ${selected ? 'rm-check-on' : ''}`}>{selected ? '✓' : ''}</span>
+        </div>
+      ) : (
       <div className="txn-actions">
         <button
           className="txn-edit"
@@ -55,6 +64,7 @@ const TransactionRow = ({ txn, onDeleted, onEdit }) => {
           ×
         </button>
       </div>
+      )}
     </div>
   );
 };

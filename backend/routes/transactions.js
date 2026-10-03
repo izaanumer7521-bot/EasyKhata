@@ -1,4 +1,5 @@
 const express = require('express');
+const mongoose = require('mongoose');
 const router = express.Router();
 const Transaction = require('../models/Transaction');
 const RecoveryMan = require('../models/RecoveryMan');
@@ -111,6 +112,22 @@ router.put(
 
     await txn.save();
     res.json({ success: true, data: txn });
+  })
+);
+
+// @route   POST /api/transactions/bulk-delete
+// @desc    Delete many entries at once
+router.post(
+  '/bulk-delete',
+  asyncHandler(async (req, res) => {
+    const { ids } = req.body;
+    if (!Array.isArray(ids) || ids.length === 0) {
+      res.status(400);
+      throw new Error('Select at least one entry');
+    }
+    const valid = ids.filter((id) => mongoose.Types.ObjectId.isValid(id));
+    const result = await Transaction.deleteMany({ _id: { $in: valid } });
+    res.json({ success: true, deleted: result.deletedCount });
   })
 );
 
