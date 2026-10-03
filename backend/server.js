@@ -6,6 +6,8 @@ const morgan = require('morgan');
 const connectDB = require('./config/db');
 const { errorHandler, notFound } = require('./middleware/errorHandler');
 
+const authRoutes = require('./routes/auth');
+const { protect } = require('./middleware/auth');
 const recoveryMenRoutes = require('./routes/recoveryMen');
 const transactionRoutes = require('./routes/transactions');
 const dashboardRoutes = require('./routes/dashboard');
@@ -17,6 +19,7 @@ connectDB().catch((err) => {
 });
 
 const app = express();
+app.set('trust proxy', 1);
 
 app.use(cors());
 app.use(express.json());
@@ -27,9 +30,10 @@ if (process.env.NODE_ENV !== 'production') {
 
 app.get('/api/health', (req, res) => res.json({ success: true, message: 'API is running' }));
 
-app.use('/api/recoverymen', recoveryMenRoutes);
-app.use('/api/transactions', transactionRoutes);
-app.use('/api/dashboard', dashboardRoutes);
+app.use('/api/auth', authRoutes);
+app.use('/api/recoverymen', protect, recoveryMenRoutes);
+app.use('/api/transactions', protect, transactionRoutes);
+app.use('/api/dashboard', protect, dashboardRoutes);
 
 // Serve the React build in production — only when running as a single
 // traditional server (e.g. Render). On Vercel, the frontend is deployed
