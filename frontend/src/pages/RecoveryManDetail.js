@@ -3,6 +3,8 @@ import { useParams, useNavigate } from 'react-router-dom';
 import TransactionRow from '../components/TransactionRow';
 import AddTransactionModal from '../components/AddTransactionModal';
 import ShareEntryModal from '../components/ShareEntryModal';
+import EditRecoveryManModal from '../components/EditRecoveryManModal';
+import EditTransactionModal from '../components/EditTransactionModal';
 import { fetchLedger, deleteRecoveryMan } from '../api/services';
 import { formatMoney, initials, avatarColor } from '../utils';
 
@@ -19,6 +21,8 @@ const RecoveryManDetail = () => {
   const [error, setError] = useState('');
   const [modalType, setModalType] = useState(null); // 'income' | 'expense' | null
   const [shareEntry, setShareEntry] = useState(null); // { txn, balance } after a save
+  const [editingRm, setEditingRm] = useState(false);
+  const [editingTxn, setEditingTxn] = useState(null); // entry being edited
 
   const load = useCallback(async () => {
     setLoading(true);
@@ -74,6 +78,9 @@ const RecoveryManDetail = () => {
             {recoveryMan.area || 'No area'} {recoveryMan.phone ? `· ${recoveryMan.phone}` : ''}
           </span>
         </div>
+        <button className="icon-btn" onClick={() => setEditingRm(true)} title="Edit recovery man">
+          ✎
+        </button>
         <button className="icon-btn danger" onClick={handleDeleteRecoveryMan} title="Delete recovery man">
           🗑
         </button>
@@ -129,6 +136,7 @@ const RecoveryManDetail = () => {
               key={txn._id}
               txn={txn}
               onDeleted={() => load()}
+              onEdit={setEditingTxn}
             />
           ))}
         </div>
@@ -153,6 +161,28 @@ const RecoveryManDetail = () => {
             const res = await load();
             // Show the WhatsApp / SMS popup with the freshly recalculated net total
             setShareEntry({ txn, balance: res ? res.currentBalance : 0 });
+          }}
+        />
+      )}
+
+      {editingRm && (
+        <EditRecoveryManModal
+          recoveryMan={recoveryMan}
+          onClose={() => setEditingRm(false)}
+          onSaved={() => {
+            setEditingRm(false);
+            load();
+          }}
+        />
+      )}
+
+      {editingTxn && (
+        <EditTransactionModal
+          txn={editingTxn}
+          onClose={() => setEditingTxn(null)}
+          onSaved={() => {
+            setEditingTxn(null);
+            load();
           }}
         />
       )}

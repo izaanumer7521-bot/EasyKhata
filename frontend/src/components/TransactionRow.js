@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { formatMoney, formatDate, formatTime } from '../utils';
 import { deleteTransaction } from '../api/services';
 
-const TransactionRow = ({ txn, onDeleted }) => {
+const TransactionRow = ({ txn, onDeleted, onEdit }) => {
   const [busy, setBusy] = useState(false);
   const isIncome = txn.type === 'income';
 
@@ -37,9 +37,24 @@ const TransactionRow = ({ txn, onDeleted }) => {
         {isIncome && <span className="text-income">{formatMoney(txn.amount)}</span>}
       </div>
 
-      <button className="txn-delete" onClick={handleDelete} title="Delete entry" aria-label="Delete entry">
-        ×
-      </button>
+      <div className="txn-actions">
+        <button
+          className="txn-edit"
+          onClick={() => onEdit(txn)}
+          title="Edit entry"
+          aria-label="Edit entry"
+        >
+          ✎
+        </button>
+        <button
+          className="txn-delete"
+          onClick={handleDelete}
+          title="Delete entry"
+          aria-label="Delete entry"
+        >
+          ×
+        </button>
+      </div>
     </div>
   );
 };

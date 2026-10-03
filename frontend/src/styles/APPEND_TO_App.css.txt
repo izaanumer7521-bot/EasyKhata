@@ -1,0 +1,37 @@
+
+/* ===== Edit buttons (add at the very END of App.css) ===== */
+.txn-actions {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+}
+.txn-edit {
+  background: transparent;
+  border: none;
+  color: var(--text-faint);
+  font-size: 15px;
+  line-height: 1;
+  padding: 4px 6px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+.txn-edit:hover {
+  color: var(--text);
+  background: var(--surface-2);
+}
+.rm-header .icon-btn + .icon-btn {
+  margin-left: 6px;
+}
+@media (max-width: 480px) {
+  .txn-row {
+    padding-right: 64px;
+  }
+  .txn-actions {
+    position: absolute;
+    top: 8px;
+    right: 6px;
+  }
+  .txn-actions .txn-delete {
+    position: static;
+  }
+}
