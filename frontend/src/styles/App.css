@@ -1028,3 +1028,15 @@
 .form-success { background: var(--income-soft); color: var(--income); border-radius: 10px; padding: 10px 12px; font-size: 13px; }
 .nav-settings { margin-left: 12px; font-size: 20px; color: var(--text-faint); text-decoration: none; }
 .nav-settings:hover { color: var(--text); }
+/* ===== Make recovery man names clearly visible ===== */
+.rm-card {
+  color: var(--text);
+}
+.rm-name {
+  color: #ffffff;
+  font-size: 16px;
+  font-weight: 700;
+}
+.rm-meta {
+  color: var(--text-muted);
+}
