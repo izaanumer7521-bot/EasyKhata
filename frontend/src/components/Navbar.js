@@ -26,6 +26,9 @@ const Navbar = () => {
             ← All recovery men
           </Link>
         )}
+        <Link to="/settings" className="nav-settings" title="Settings" aria-label="Settings">
+          ⚙
+        </Link>
       </div>
     </header>
   );
