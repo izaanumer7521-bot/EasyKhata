@@ -5,9 +5,10 @@ import Dashboard from './pages/Dashboard';
 import RecoveryManDetail from './pages/RecoveryManDetail';
 import Login from './pages/Login';
 import Settings from './pages/Settings';
+import { LanguageProvider } from './i18n/LanguageContext';
 import './styles/App.css';
 
-function App() {
+function AppInner() {
   const [authed, setAuthed] = useState(!!localStorage.getItem('ek_token'));
 
   useEffect(() => {
@@ -39,5 +40,11 @@ function App() {
     </BrowserRouter>
   );
 }
+
+const App = () => (
+  <LanguageProvider>
+    <AppInner />
+  </LanguageProvider>
+);
 
 export default App;

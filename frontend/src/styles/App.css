@@ -1040,3 +1040,16 @@
 .rm-meta {
   color: var(--text-muted);
 }
+/* ===== Languages & statements (paste at the very END of App.css) ===== */
+.lang-search { width: 100%; margin-bottom: 10px; }
+.lang-list { display: flex; flex-direction: column; gap: 6px; max-height: 260px; overflow-y: auto; }
+.lang-item { display: flex; align-items: center; gap: 10px; width: 100%; padding: 11px 14px; border-radius: 12px; border: 1px solid var(--border-soft); background: var(--surface-2); color: var(--text); text-align: start; cursor: pointer; }
+.lang-item:hover { border-color: var(--brass); }
+.lang-active { border-color: var(--brass); background: var(--brass-soft); }
+.lang-native { font-weight: 700; font-size: 15px; }
+.lang-name { color: var(--text-muted); font-size: 12.5px; }
+.lang-tick { margin-inline-start: auto; color: var(--brass); font-weight: 700; }
+.lang-empty { color: var(--text-faint); text-align: center; padding: 14px; font-size: 13px; }
+.wa-btn { background: #25d366; color: #06310f; font-weight: 700; border: none; }
+[dir='rtl'] .fab { flex-direction: row-reverse; }
+[dir='rtl'] .txn-row, [dir='rtl'] .rm-card { text-align: right; }

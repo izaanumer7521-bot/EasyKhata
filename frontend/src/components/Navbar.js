@@ -1,7 +1,9 @@
 import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
+import { useLang } from '../i18n/LanguageContext';
 
 const Navbar = () => {
+  const { t } = useLang();
   const location = useLocation();
   const isDashboard = location.pathname === '/';
 
@@ -23,7 +25,7 @@ const Navbar = () => {
         </Link>
         {!isDashboard && (
           <Link to="/" className="navbar-back-link">
-            ← All recovery men
+            {t('all_rm')}
           </Link>
         )}
         <Link to="/settings" className="nav-settings" title="Settings" aria-label="Settings">

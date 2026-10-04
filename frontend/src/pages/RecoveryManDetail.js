@@ -6,6 +6,7 @@ import ShareEntryModal from '../components/ShareEntryModal';
 import EditRecoveryManModal from '../components/EditRecoveryManModal';
 import EditTransactionModal from '../components/EditTransactionModal';
 import Modal from '../components/Modal';
+import StatementModal from '../components/StatementModal';
 import { fetchLedger, deleteRecoveryMan, bulkDeleteTransactions } from '../api/services';
 import { formatMoney, initials, avatarColor } from '../utils';
 
@@ -23,6 +24,7 @@ const RecoveryManDetail = () => {
   const [modalType, setModalType] = useState(null); // 'income' | 'expense' | null
   const [shareEntry, setShareEntry] = useState(null); // { txn, balance } after a save
   const [editingRm, setEditingRm] = useState(false);
+  const [showStatement, setShowStatement] = useState(false);
   const [editingTxn, setEditingTxn] = useState(null); // entry being edited
   const [selectMode, setSelectMode] = useState(false);
   const [selected, setSelected] = useState(new Set());
@@ -123,6 +125,9 @@ const RecoveryManDetail = () => {
             {recoveryMan.area || 'No area'} {recoveryMan.phone ? `· ${recoveryMan.phone}` : ''}
           </span>
         </div>
+        <button className="icon-btn" onClick={() => setShowStatement(true)} title="Statement">
+          📄
+        </button>
         <button className="icon-btn" onClick={() => setEditingRm(true)} title="Edit recovery man">
           ✎
         </button>
@@ -252,6 +257,15 @@ const RecoveryManDetail = () => {
             // Show the WhatsApp / SMS popup with the freshly recalculated net total
             setShareEntry({ txn, balance: res ? res.currentBalance : 0 });
           }}
+        />
+      )}
+
+      {showStatement && (
+        <StatementModal
+          recoveryMan={recoveryMan}
+          entries={entries}
+          currentBalance={currentBalance}
+          onClose={() => setShowStatement(false)}
         />
       )}
 

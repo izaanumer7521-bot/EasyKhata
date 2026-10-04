@@ -3,8 +3,10 @@ import RecoveryManCard from '../components/RecoveryManCard';
 import AddRecoveryManModal from '../components/AddRecoveryManModal';
 import { fetchRecoveryMen } from '../api/services';
 import { formatMoney } from '../utils';
+import { useLang } from '../i18n/LanguageContext';
 
 const Dashboard = () => {
+  const { t: tr } = useLang();
   const [recoveryMen, setRecoveryMen] = useState([]);
   const [summary, setSummary] = useState({ youWillGive: 0, youWillGet: 0 });
   const [search, setSearch] = useState('');
@@ -40,17 +42,17 @@ const Dashboard = () => {
     <div className="page">
       <section className="summary-row">
         <div className="summary-card summary-give">
-          <span className="summary-label">Expense</span>
+          <span className="summary-label">{tr('expense')}</span>
           <span className="summary-amount mono">{formatMoney(summary.youWillGive)}</span>
         </div>
         <div className="summary-card summary-get">
-          <span className="summary-label">Income</span>
+          <span className="summary-label">{tr('income')}</span>
           <span className="summary-amount mono">{formatMoney(summary.youWillGet)}</span>
         </div>
       </section>
 
       <section className="section-header">
-        <span className="section-title">Recovery Men</span>
+        <span className="section-title">{tr('recovery_men')}</span>
         <span className="section-count">{recoveryMen.length}</span>
       </section>
 
@@ -58,17 +60,17 @@ const Dashboard = () => {
         <input
           value={search}
           onChange={(e) => setSearch(e.target.value)}
-          placeholder="Search recovery men by name, phone or area"
+          placeholder={tr('search_rm')}
         />
       </div>
 
-      {loading && <div className="empty-state">Loading…</div>}
+      {loading && <div className="empty-state">{tr('loading')}</div>}
       {!loading && error && <div className="empty-state empty-state-error">{error}</div>}
 
       {!loading && !error && recoveryMen.length === 0 && (
         <div className="empty-state">
-          <p>No recovery men yet.</p>
-          <p className="empty-state-sub">Add your first recovery man to start tracking income and expenses.</p>
+          <p>{tr('no_rm')}</p>
+          <p className="empty-state-sub">{tr('no_rm_sub')}</p>
         </div>
       )}
 
@@ -82,7 +84,7 @@ const Dashboard = () => {
 
       <button className="fab" onClick={() => setShowAdd(true)}>
         <span className="fab-icon">+</span>
-        Add Recovery Man
+        {tr('add_rm')}
       </button>
 
       {showAdd && (

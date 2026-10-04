@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
 import { login } from '../api/auth';
+import { useLang } from '../i18n/LanguageContext';
 
 const Login = ({ onLoggedIn }) => {
+  const { t } = useLang();
   const [password, setPassword] = useState('');
   const [show, setShow] = useState(false);
   const [error, setError] = useState('');
@@ -26,11 +28,11 @@ const Login = ({ onLoggedIn }) => {
     <div className="auth-wrap">
       <form className="auth-card form" onSubmit={submit}>
         <img src={`${process.env.PUBLIC_URL}/logo.svg`} alt="" width="56" height="56" className="auth-logo" />
-        <h2 className="auth-title">Welcome back</h2>
-        <p className="auth-sub">Enter your password to open EasyKhata</p>
+        <h2 className="auth-title">{t('welcome')}</h2>
+        <p className="auth-sub">{t('login_sub')}</p>
         {error && <div className="form-error">{error}</div>}
         <label className="field">
-          <span>Password</span>
+          <span>{t('password')}</span>
           <div className="pw-row">
             <input
               autoFocus
@@ -40,12 +42,12 @@ const Login = ({ onLoggedIn }) => {
               autoComplete="current-password"
             />
             <button type="button" className="pw-toggle" onClick={() => setShow(!show)}>
-              {show ? 'Hide' : 'Show'}
+              {show ? t('hide') : t('show')}
             </button>
           </div>
         </label>
         <button className="btn btn-brass btn-block" type="submit" disabled={busy || !password}>
-          {busy ? 'Checking…' : 'Unlock'}
+          {busy ? t('checking') : t('unlock')}
         </button>
       </form>
     </div>
